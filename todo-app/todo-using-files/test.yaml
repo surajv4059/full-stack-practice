@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: a10-ingress01
+  namespace: a10harmony
+  annotations:
+    kubernetes.io/ingress.class: a10-ext
+
+spec:
+  rules:
+  - host: web01.a10test.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          serviceName: {{ template "fullname" $ }}-srv
+          servicePort: 80

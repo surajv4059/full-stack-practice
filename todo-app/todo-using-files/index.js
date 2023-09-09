@@ -13,7 +13,7 @@ todos = []
 
 fs.readFile("data.json" , "utf-8" , (err,data) => {
     todos = JSON.parse(data);
-    console.log(todos)
+    // console.log(todos)
 })
 
 function findIndex(arr,id){
@@ -37,7 +37,6 @@ function removeIndex(arr,id){
 app.get('/todos', (req,res) =>{
     res.send(todos); 
 });
-
 app.post('/todos',(req,res) =>{
     const newTodo = {
         id: Math.floor(Math.random() * 1000000),
@@ -53,7 +52,7 @@ app.post('/todos',(req,res) =>{
     
 });
 
-app.delete('/deleteTodo',(req,res) => {
+app.delete('/todos',(req,res) => {
     const id = parseInt(req.body.id);
     let indextodelete = findIndex(todos,id);
     if(indextodelete != -1){
@@ -61,7 +60,7 @@ app.delete('/deleteTodo',(req,res) => {
         fs.writeFile("data.json",JSON.stringify(todos), (err)=>{
             if(err) throw err;
             res.status(200).json("deleted successfully");
-        });
+        }); 
     }
     else {
         res.send("entry not present");
